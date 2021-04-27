@@ -57,6 +57,7 @@ import com.radixdlt.statecomputer.checkpoint.GenesisProvider;
 import com.radixdlt.sync.CommittedReader;
 import org.apache.logging.log4j.util.Strings;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.bouncycastle.util.encoders.Hex;
 import org.json.JSONObject;
 
 import com.google.common.collect.ImmutableList;
@@ -459,6 +460,7 @@ public final class GenerateUniverses {
 			IntStream.range(0, keys.size()).forEach(i -> {
 				String keyname = String.format(template, i);
 				System.out.format("export RADIXDLT_%s_PRIVKEY=%s%n", keyname, Bytes.toBase64String(keys.get(i).getKeyPair().getPrivateKey()));
+				System.out.format("export RADIXDLT_%s_PUBKEY=%s%n", keyname, keys.get(i).getKeyPair().getPublicKey().toBase58());
 			});
 		}
 
