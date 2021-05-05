@@ -49,7 +49,7 @@ public class RadixNodeModuleTest {
 
 	private RuntimeProperties createDefaultProperties() {
 		final var properties = mock(RuntimeProperties.class);
-		doReturn("127.0.0.1").when(properties).get(eq("host.ip"), any());
+		doReturn("127.0.0.1").when(properties).get(eq("network.host_ip"), any());
 		Files.delete(new File("nonesuch.ks"));
 		when(properties.get(eq("node.key.path"), any(String.class))).thenReturn("nonesuch.ks");
 		return properties;
