@@ -19,17 +19,15 @@ package com.radixdlt.api.service;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.json.JSONArray;
 
 import com.google.common.hash.HashCode;
 import com.google.inject.Inject;
+import com.radixdlt.api.data.PreparedTransaction;
+import com.radixdlt.api.data.TransactionAction;
 import com.radixdlt.atom.TxAction;
 import com.radixdlt.atom.TxLowLevelBuilder;
 import com.radixdlt.atom.Txn;
 import com.radixdlt.atom.actions.BurnToken;
-import com.radixdlt.api.archive.api.PreparedTransaction;
-import com.radixdlt.api.archive.api.TransactionAction;
-import com.radixdlt.api.archive.store.ClientApiStore;
 import com.radixdlt.crypto.ECDSASignature;
 import com.radixdlt.engine.RadixEngine;
 import com.radixdlt.environment.EventDispatcher;
@@ -50,35 +48,29 @@ import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static com.radixdlt.api.data.ApiErrors.UNABLE_TO_PREPARE_TX;
 import static com.radixdlt.atom.actions.ActionErrors.DIFFERENT_SOURCE_ADDRESSES;
 import static com.radixdlt.atom.actions.ActionErrors.EMPTY_TRANSACTIONS_NOT_SUPPORTED;
 import static com.radixdlt.atom.actions.ActionErrors.SUBMISSION_FAILURE;
 import static com.radixdlt.atom.actions.ActionErrors.TRANSACTION_ADDRESS_DOES_NOT_MATCH;
-import static com.radixdlt.api.archive.api.ApiErrors.UNABLE_TO_PREPARE_TX;
 
 public final class SubmissionService {
 	private final Logger logger = LogManager.getLogger();
 	private final RadixEngine<LedgerAndBFTProof> radixEngine;
 	private final EventDispatcher<MempoolAdd> mempoolAddEventDispatcher;
-	private final ClientApiStore clientApiStore;
 
 	@Inject
 	public SubmissionService(
 		RadixEngine<LedgerAndBFTProof> radixEngine,
-		EventDispatcher<MempoolAdd> mempoolAddEventDispatcher,
-		ClientApiStore clientApiStore
+		EventDispatcher<MempoolAdd> mempoolAddEventDispatcher
 	) {
 		this.radixEngine = radixEngine;
 		this.mempoolAddEventDispatcher = mempoolAddEventDispatcher;
-		this.clientApiStore = clientApiStore;
-	}
-
-	public Result<List<TransactionAction>> parse(JSONArray actions) {
-		return ActionParser.parse(actions, clientApiStore);
 	}
 
 	public Result<PreparedTransaction> prepareTransaction(List<TransactionAction> steps, Optional<String> message) {
-		var addresses = steps.stream().map(TransactionAction::getFrom)
+		var addresses = steps.stream()
+			.map(TransactionAction::getFrom)
 			.filter(Objects::nonNull)
 			.collect(Collectors.toSet());
 

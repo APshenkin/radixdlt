@@ -44,7 +44,7 @@ import com.radixdlt.atom.TxAction;
 import com.radixdlt.atom.actions.CreateFixedToken;
 import com.radixdlt.atom.actions.TransferToken;
 import com.radixdlt.atommodel.tokens.TokenDefinitionUtils;
-import com.radixdlt.api.archive.Rri;
+import com.radixdlt.api.Rri;
 import com.radixdlt.consensus.bft.View;
 import com.radixdlt.counters.SystemCounters;
 import com.radixdlt.counters.SystemCountersImpl;

@@ -18,13 +18,13 @@
 package com.radixdlt.api.service;
 
 import com.google.inject.Inject;
-import com.radixdlt.api.archive.Rri;
-import com.radixdlt.api.archive.api.TxHistoryEntry;
-import com.radixdlt.api.archive.store.ClientApiStore;
-import com.radixdlt.api.archive.store.TokenBalance;
-import com.radixdlt.api.archive.store.TokenDefinitionRecord;
-import com.radixdlt.api.archive.store.berkeley.BalanceEntry;
-import com.radixdlt.api.archive.store.berkeley.UnstakeEntry;
+import com.radixdlt.api.Rri;
+import com.radixdlt.api.data.TxHistoryEntry;
+import com.radixdlt.api.store.ClientApiStore;
+import com.radixdlt.api.store.TokenBalance;
+import com.radixdlt.api.store.TokenDefinitionRecord;
+import com.radixdlt.api.data.BalanceEntry;
+import com.radixdlt.api.data.UnstakeEntry;
 import com.radixdlt.identifiers.AID;
 import com.radixdlt.identifiers.REAddr;
 import com.radixdlt.utils.functional.Result;
